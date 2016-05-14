@@ -47,9 +47,17 @@
 			isa = PBXGroup;
 			children = (
 				BF5FB1591CE6C36600817AF8 /* Prime.h */,
-				BF5FB15B1CE6C36600817AF8 /* Info.plist */,
+				BFE699FB1CE6C63A00EBE67F /* Supporting Files */,
 			);
 			path = Prime;
+			sourceTree = "<group>";
+		};
+		BFE699FB1CE6C63A00EBE67F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BF5FB15B1CE6C36600817AF8 /* Info.plist */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -230,6 +238,7 @@
 		BF5FB15F1CE6C36600817AF8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -240,12 +249,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.rileytestut.Prime;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		BF5FB1601CE6C36600817AF8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -278,6 +289,7 @@
 				BF5FB1601CE6C36600817AF8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
