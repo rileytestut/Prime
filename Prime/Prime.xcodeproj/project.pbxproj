@@ -8,9 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		BF5FB15A1CE6C36600817AF8 /* Prime.h in Headers */ = {isa = PBXBuildFile; fileRef = BF5FB1591CE6C36600817AF8 /* Prime.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BFCB302B1CE7DB180059348B /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE69A111CE6DE5A00EBE67F /* CameraController.swift */; };
 		BFE69A061CE6C83900EBE67F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFE69A051CE6C83900EBE67F /* Info.plist */; };
 		BFE69A0A1CE6C87900EBE67F /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE69A091CE6C87900EBE67F /* PreviewView.swift */; };
-		BFE69A121CE6DE5A00EBE67F /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE69A111CE6DE5A00EBE67F /* CameraController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -162,7 +162,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFE69A121CE6DE5A00EBE67F /* CameraController.swift in Sources */,
+				BFCB302B1CE7DB180059348B /* CameraController.swift in Sources */,
 				BFE69A0A1CE6C87900EBE67F /* PreviewView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

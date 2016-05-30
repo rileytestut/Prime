@@ -33,6 +33,17 @@ extension ViewController
         super.viewDidLoad()
         
         self.cameraController.addPreviewView(self.previewView)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleTapGesture(_:)))
+        tapGestureRecognizer.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    @objc func handleTapGesture(gestureRecognizer: UITapGestureRecognizer)
+    {
+        self.cameraController.capturePhoto { (image, error) in
+            print(image, error)
+        }
     }
     
     override func viewWillAppear(animated: Bool)

@@ -23,6 +23,8 @@ public class CameraController
     /// Private
     private let sessionQueue = dispatch_queue_create("com.rileytestut.Prime.CameraController.sessionQueue", DISPATCH_QUEUE_SERIAL)
     
+    private let stillImageOutput = AVCaptureStillImageOutput()
+    
     public init(sessionPreset: String, preferredCameraPosition: AVCaptureDevicePosition = .Unspecified)
     {
         self.captureSession = AVCaptureSession()
@@ -44,6 +46,8 @@ public class CameraController
             {
                 self.addCaptureDevice(captureDevice)
             }
+            
+            self.captureSession.addOutput(self.stillImageOutput)
             
             self.captureSession.commitConfiguration()
             
@@ -73,6 +77,26 @@ public extension CameraController
         dispatch_async(self.sessionQueue) {
             self.captureSession.stopRunning()
             self.running = false
+        }
+    }
+}
+
+/// Capture Media
+public extension CameraController
+{
+    func capturePhoto(completion: ((UIImage?, NSError?) -> Void))
+    {
+        self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)) { (sampleBuffer, error) in
+            
+            guard let sampleBuffer = sampleBuffer else {
+                completion(nil, error)
+                return
+            }
+
+            let data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
+            let image = UIImage(data: data)
+            
+            completion(image, nil)
         }
     }
 }
