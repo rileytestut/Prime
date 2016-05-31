@@ -41,8 +41,12 @@ extension ViewController
     
     @objc func handleTapGesture(gestureRecognizer: UITapGestureRecognizer)
     {
-        self.cameraController.capturePhoto { (image, error) in
-            print(image, error)
+        self.cameraController.capturePhoto { (result) in
+            switch result
+            {
+            case let .success(image): print("Captured image:", image)
+            case let .failure(error): print("Failed to capture image with error:", error)
+            }
         }
     }
     

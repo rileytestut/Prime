@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BF5FB15A1CE6C36600817AF8 /* Prime.h in Headers */ = {isa = PBXBuildFile; fileRef = BF5FB1591CE6C36600817AF8 /* Prime.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BF7846661CFD626800E928D1 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7846651CFD626800E928D1 /* Result.swift */; };
+		BF7846691CFD6A8100E928D1 /* CapturedMediaProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7846681CFD6A8100E928D1 /* CapturedMediaProtocol.swift */; };
 		BFCB302B1CE7DB180059348B /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE69A111CE6DE5A00EBE67F /* CameraController.swift */; };
 		BFE69A061CE6C83900EBE67F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFE69A051CE6C83900EBE67F /* Info.plist */; };
 		BFE69A0A1CE6C87900EBE67F /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE69A091CE6C87900EBE67F /* PreviewView.swift */; };
@@ -16,6 +18,8 @@
 /* Begin PBXFileReference section */
 		BF5FB1561CE6C36600817AF8 /* Prime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Prime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF5FB1591CE6C36600817AF8 /* Prime.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Prime.h; sourceTree = "<group>"; };
+		BF7846651CFD626800E928D1 /* Result.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Result.swift; path = Helper/Result.swift; sourceTree = "<group>"; };
+		BF7846681CFD6A8100E928D1 /* CapturedMediaProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CapturedMediaProtocol.swift; path = Protocols/CapturedMediaProtocol.swift; sourceTree = "<group>"; };
 		BFE69A051CE6C83900EBE67F /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = "Supporting Files/Info.plist"; sourceTree = "<group>"; };
 		BFE69A091CE6C87900EBE67F /* PreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreviewView.swift; path = Preview/PreviewView.swift; sourceTree = "<group>"; };
 		BFE69A111CE6DE5A00EBE67F /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Controller/CameraController.swift; sourceTree = "<group>"; };
@@ -54,9 +58,27 @@
 				BF5FB1591CE6C36600817AF8 /* Prime.h */,
 				BFE699FE1CE6C67B00EBE67F /* Controller */,
 				BFE69A041CE6C78700EBE67F /* Preview */,
+				BF7846671CFD69E700E928D1 /* Protocols */,
+				BF7846641CFD625300E928D1 /* Helper */,
 				BFE699FB1CE6C63A00EBE67F /* Supporting Files */,
 			);
 			path = Prime;
+			sourceTree = "<group>";
+		};
+		BF7846641CFD625300E928D1 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				BF7846651CFD626800E928D1 /* Result.swift */,
+			);
+			name = Helper;
+			sourceTree = "<group>";
+		};
+		BF7846671CFD69E700E928D1 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				BF7846681CFD6A8100E928D1 /* CapturedMediaProtocol.swift */,
+			);
+			name = Protocols;
 			sourceTree = "<group>";
 		};
 		BFE699FB1CE6C63A00EBE67F /* Supporting Files */ = {
@@ -162,6 +184,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF7846691CFD6A8100E928D1 /* CapturedMediaProtocol.swift in Sources */,
+				BF7846661CFD626800E928D1 /* Result.swift in Sources */,
 				BFCB302B1CE7DB180059348B /* CameraController.swift in Sources */,
 				BFE69A0A1CE6C87900EBE67F /* PreviewView.swift in Sources */,
 			);

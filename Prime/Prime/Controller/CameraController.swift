@@ -84,19 +84,46 @@ public extension CameraController
 /// Capture Media
 public extension CameraController
 {
-    func capturePhoto(completion: ((UIImage?, NSError?) -> Void))
+    func capturePhoto(completion: Result<UIImage, NSError> -> Void)
     {
+        self._capturePhoto(completion)
+    }
+    
+    func capturePhoto<T: CapturedMediaProtocol>(completion: Result<T, NSError> -> Void)
+    {
+        self._capturePhoto(completion)
+    }
+    
+    private func _capturePhoto<T: CapturedMediaProtocol>(completion: Result<T, NSError> -> Void)
+    {
+        precondition(T.self == UIImage.self || T.self == NSData.self || T.self == CMSampleBuffer.self, "Photo must be returned as UIImage, NSData, or CMSampleBuffer")
+        
         self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)) { (sampleBuffer, error) in
             
             guard let sampleBuffer = sampleBuffer else {
-                completion(nil, error)
+                completion(.failure(error))
                 return
             }
-
-            let data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
-            let image = UIImage(data: data)
             
-            completion(image, nil)
+            if let result = sampleBuffer as? T
+            {
+                completion(.success(result))
+                return
+            }
+            
+            let data = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
+            if let result = data as? T
+            {
+                completion(.success(result))
+                return
+            }
+            
+            let image = UIImage(data: data)
+            if let result = image as? T
+            {
+                completion(.success(result))
+                return
+            }
         }
     }
 }
