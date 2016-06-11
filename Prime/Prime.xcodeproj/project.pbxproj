@@ -11,7 +11,6 @@
 		BF7846661CFD626800E928D1 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7846651CFD626800E928D1 /* Result.swift */; };
 		BF7846691CFD6A8100E928D1 /* CapturedMediaProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF7846681CFD6A8100E928D1 /* CapturedMediaProtocol.swift */; };
 		BFCB302B1CE7DB180059348B /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE69A111CE6DE5A00EBE67F /* CameraController.swift */; };
-		BFE69A061CE6C83900EBE67F /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFE69A051CE6C83900EBE67F /* Info.plist */; };
 		BFE69A0A1CE6C87900EBE67F /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE69A091CE6C87900EBE67F /* PreviewView.swift */; };
 /* End PBXBuildFile section */
 
@@ -173,7 +172,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BFE69A061CE6C83900EBE67F /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
