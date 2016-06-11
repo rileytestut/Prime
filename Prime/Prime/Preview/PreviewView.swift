@@ -41,7 +41,11 @@ public extension PreviewView
 
 public class PreviewView: UIView
 {
-    public var videoGravity = VideoGravity.ResizeAspect
+    public var videoGravity = VideoGravity.ResizeAspect {
+        didSet {
+            self.previewLayer.videoGravity = self.videoGravity.layerVideoGravity
+        }
+    }
     
     internal let previewLayer = AVCaptureVideoPreviewLayer(session: nil)
     
