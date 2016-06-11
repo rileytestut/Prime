@@ -20,6 +20,22 @@ public class CameraController
     /// AVFoundation
     public let captureSession: AVCaptureSession
     
+    /// Cameras
+    public var currentCamera: AVCaptureDevice?
+    {
+        guard let inputs = self.captureSession.inputs as? [AVCaptureDeviceInput] else { return nil }
+        
+        for input in inputs
+        {
+            if input.ports.first?.mediaType == AVMediaTypeVideo
+            {
+                return input.device
+            }
+        }
+        
+        return nil
+    }
+    
     /// Private
     private let sessionQueue = dispatch_queue_create("com.rileytestut.Prime.CameraController.sessionQueue", DISPATCH_QUEUE_SERIAL)
     
@@ -125,6 +141,44 @@ public extension CameraController
                 return
             }
         }
+    }
+}
+
+/// Camera Settings
+public extension CameraController
+{
+    func setCameraSettings(settings: CameraSettings) throws
+    {
+        guard let currentCamera = self.currentCamera else { return }
+        
+        try currentCamera.lockForConfiguration()
+        
+        if let focusMode = settings.focusMode where currentCamera.isFocusModeSupported(focusMode)
+        {
+            if let pointOfInterest = settings.pointOfInterest
+            {
+                currentCamera.focusPointOfInterest = pointOfInterest
+            }
+            
+            currentCamera.focusMode = focusMode
+        }
+        
+        if let exposureMode = settings.exposureMode where currentCamera.isExposureModeSupported(exposureMode)
+        {
+            if let pointOfInterest = settings.pointOfInterest
+            {
+                currentCamera.exposurePointOfInterest = pointOfInterest
+            }
+            
+            currentCamera.exposureMode = exposureMode
+        }
+        
+        if let whiteBalanceMode = settings.whiteBalanceMode where currentCamera.isWhiteBalanceModeSupported(whiteBalanceMode)
+        {
+            currentCamera.whiteBalanceMode = whiteBalanceMode
+        }
+        
+        currentCamera.unlockForConfiguration()
     }
 }
 
