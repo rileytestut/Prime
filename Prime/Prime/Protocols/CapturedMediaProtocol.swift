@@ -11,6 +11,7 @@ import AVFoundation
 
 public protocol CapturedMediaProtocol { }
 
-extension UIImage: CapturedMediaProtocol { }
-extension NSData: CapturedMediaProtocol { }
-extension CMSampleBuffer: CapturedMediaProtocol { }
+extension UIImage: CapturedMediaProtocol {}
+extension CMSampleBuffer: CapturedMediaProtocol {}
+extension Data: CapturedMediaProtocol {}
+extension NSData: CapturedMediaProtocol {}

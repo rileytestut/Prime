@@ -37,16 +37,16 @@ public class CameraController
     }
     
     /// Private
-    private let sessionQueue = dispatch_queue_create("com.rileytestut.Prime.CameraController.sessionQueue", DISPATCH_QUEUE_SERIAL)
+    private let sessionQueue = DispatchQueue(label: "com.rileytestut.Prime.CameraController.sessionQueue", attributes: .serial)
     
     private let stillImageOutput = AVCaptureStillImageOutput()
     
-    public init(sessionPreset: String, preferredCameraPosition: AVCaptureDevicePosition = .Unspecified)
+    public init(sessionPreset: String, preferredCameraPosition: AVCaptureDevicePosition = .unspecified)
     {
         self.captureSession = AVCaptureSession()
         self.captureSession.sessionPreset = sessionPreset
         
-        dispatch_async(self.sessionQueue) {
+        self.sessionQueue.async {
             
             self.captureSession.beginConfiguration()
             
@@ -54,8 +54,8 @@ public class CameraController
             
             switch preferredCameraPosition
             {
-            case .Front, .Back: captureDevice = self.cameraDevice(position: preferredCameraPosition)
-            case .Unspecified: captureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
+            case .front, .back: captureDevice = self.cameraDevice(position: preferredCameraPosition)
+            case .unspecified: captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
             }
             
             if let captureDevice = captureDevice
@@ -80,7 +80,7 @@ public extension CameraController
     {
         guard !self.running else { return }
         
-        dispatch_async(self.sessionQueue) {
+        self.sessionQueue.async {
             self.captureSession.startRunning()
             self.running = true
         }
@@ -90,7 +90,7 @@ public extension CameraController
     {
         guard self.running else { return }
         
-        dispatch_async(self.sessionQueue) {
+        self.sessionQueue.async {
             self.captureSession.stopRunning()
             self.running = false
         }
@@ -100,24 +100,23 @@ public extension CameraController
 /// Capture Media
 public extension CameraController
 {
-    func capturePhoto(completion: Result<UIImage, NSError> -> Void)
+    func capturePhoto(_ completion: (Result<UIImage, NSError>) -> Void)
     {
         self._capturePhoto(completion)
     }
     
-    func capturePhoto<T: CapturedMediaProtocol>(completion: Result<T, NSError> -> Void)
+    func capturePhoto<T: CapturedMediaProtocol>(_ completion: (Result<T, NSError>) -> Void)
     {
         self._capturePhoto(completion)
     }
     
-    private func _capturePhoto<T: CapturedMediaProtocol>(completion: Result<T, NSError> -> Void)
+    private func _capturePhoto<T: CapturedMediaProtocol>(_ completion: (Result<T, NSError>) -> Void)
     {
-        precondition(T.self == UIImage.self || T.self == NSData.self || T.self == CMSampleBuffer.self, "Photo must be returned as UIImage, NSData, or CMSampleBuffer")
+        precondition(T.self == UIImage.self || T.self == Data.self || T.self == NSData.self || T.self == CMSampleBuffer.self, "Photo must be returned as UIImage, Data, NSData, or CMSampleBuffer")
         
-        self.stillImageOutput.captureStillImageAsynchronouslyFromConnection(self.stillImageOutput.connectionWithMediaType(AVMediaTypeVideo)) { (sampleBuffer, error) in
-            
+        self.stillImageOutput.captureStillImageAsynchronously(from: self.stillImageOutput.connection(withMediaType: AVMediaTypeVideo)) { (sampleBuffer, error) in
             guard let sampleBuffer = sampleBuffer else {
-                completion(.failure(error))
+                completion(.failure(error!))
                 return
             }
             
@@ -134,7 +133,7 @@ public extension CameraController
                 return
             }
             
-            let image = UIImage(data: data)
+            let image = UIImage(data: data!)
             if let result = image as? T
             {
                 completion(.success(result))
@@ -147,7 +146,7 @@ public extension CameraController
 /// Camera Settings
 public extension CameraController
 {
-    func setCameraSettings(settings: CameraSettings) throws
+    func setCameraSettings(_ settings: CameraSettings) throws
     {
         guard let currentCamera = self.currentCamera else { return }
         
@@ -185,14 +184,14 @@ public extension CameraController
 /// Capture Devices
 public extension CameraController
 {
-    func cameraDevice(position position: AVCaptureDevicePosition) -> AVCaptureDevice?
+    func cameraDevice(position: AVCaptureDevicePosition) -> AVCaptureDevice?
     {
         return self.captureDevice(AVMediaTypeVideo, position: position)
     }
     
-    private func captureDevice(mediaType: String, position: AVCaptureDevicePosition) -> AVCaptureDevice?
+    private func captureDevice(_ mediaType: String, position: AVCaptureDevicePosition) -> AVCaptureDevice?
     {
-        let devices = (AVCaptureDevice.devicesWithMediaType(mediaType) as! [AVCaptureDevice]).filter({ $0.position == position })
+        let devices = (AVCaptureDevice.devices(withMediaType: mediaType) as! [AVCaptureDevice]).filter({ $0.position == position })
         return devices.first
     }
 }
@@ -200,26 +199,26 @@ public extension CameraController
 /// Preview Views
 public extension CameraController
 {
-    func addPreviewView(previewView: PreviewView)
+    func addPreviewView(_ previewView: PreviewView)
     {
-        previewView.previewLayer.session = self.captureSession
+        previewView.previewLayer?.session = self.captureSession
         
         self.previewViews.append(previewView)
     }
     
-    func removePreviewView(previewView: PreviewView)
+    func removePreviewView(_ previewView: PreviewView)
     {
-        guard let index = self.previewViews.indexOf(previewView) else { return }
+        guard let index = self.previewViews.index(of: previewView) else { return }
         
-        previewView.previewLayer.session = nil
+        previewView.previewLayer?.session = nil
         
-        self.previewViews.removeAtIndex(index)
+        self.previewViews.remove(at: index)
     }
 }
 
 private extension CameraController
 {
-    func addCaptureDevice(captureDevice: AVCaptureDevice) -> Bool
+    func addCaptureDevice(_ captureDevice: AVCaptureDevice) -> Bool
     {
         do
         {

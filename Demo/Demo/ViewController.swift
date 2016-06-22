@@ -42,7 +42,7 @@ extension ViewController
         self.view.addGestureRecognizer(longPressGestureRecognizer)
     }
     
-    override func viewWillAppear(animated: Bool)
+    override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
         
@@ -58,7 +58,7 @@ extension ViewController
 
 private extension ViewController
 {
-    @objc func handleTapGesture(gestureRecognizer: UITapGestureRecognizer)
+    @objc func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer)
     {
         self.cameraController.capturePhoto { (result) in
             switch result
@@ -69,13 +69,13 @@ private extension ViewController
         }
     }
     
-    @objc func handleLongPressGesture(gestureRecognizer: UILongPressGestureRecognizer)
+    @objc func handleLongPressGesture(_ gestureRecognizer: UILongPressGestureRecognizer)
     {
-        guard gestureRecognizer.state == .Began else { return }
+        guard gestureRecognizer.state == .began else { return }
         
         do
         {
-            let settings = CameraSettings(focusMode: AVCaptureFocusMode.AutoFocus, exposureMode: AVCaptureExposureMode.AutoExpose, pointOfInterest: CGPoint(x: 0.5, y: 0.5))
+            let settings = CameraSettings(focusMode: .autoFocus, exposureMode: .autoExpose, pointOfInterest: CGPoint(x: 0.5, y: 0.5))
             try self.cameraController.setCameraSettings(settings)
         }
         catch let error as NSError

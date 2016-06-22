@@ -13,16 +13,16 @@ public extension PreviewView
 {
     enum VideoGravity
     {
-        case Resize
-        case ResizeAspect
-        case ResizeAspectFill
+        case resize
+        case resizeAspect
+        case resizeAspectFill
         
         public var layerVideoGravity: String {
             switch self
             {
-            case .Resize: return AVLayerVideoGravityResize
-            case .ResizeAspect: return AVLayerVideoGravityResizeAspect
-            case .ResizeAspectFill: return AVLayerVideoGravityResizeAspectFill
+            case .resize: return AVLayerVideoGravityResize
+            case .resizeAspect: return AVLayerVideoGravityResizeAspect
+            case .resizeAspectFill: return AVLayerVideoGravityResizeAspectFill
             }
         }
         
@@ -30,9 +30,9 @@ public extension PreviewView
         {
             switch layerVideoGravity
             {
-            case AVLayerVideoGravityResize: self = .Resize
-            case AVLayerVideoGravityResizeAspect: self = .ResizeAspect
-            case AVLayerVideoGravityResizeAspectFill: self = .ResizeAspectFill
+            case AVLayerVideoGravityResize: self = .resize
+            case AVLayerVideoGravityResizeAspect: self = .resizeAspect
+            case AVLayerVideoGravityResizeAspectFill: self = .resizeAspectFill
             default: return nil
             }
         }
@@ -41,9 +41,9 @@ public extension PreviewView
 
 public class PreviewView: UIView
 {
-    public var videoGravity = VideoGravity.ResizeAspect {
+    public var videoGravity = VideoGravity.resizeAspect {
         didSet {
-            self.previewLayer.videoGravity = self.videoGravity.layerVideoGravity
+            self.previewLayer?.videoGravity = self.videoGravity.layerVideoGravity
         }
     }
     
@@ -56,7 +56,7 @@ public class PreviewView: UIView
         self.prepare()
         
         // Only set default background color when initializing from code, not Interface Builder
-        self.backgroundColor = UIColor.blackColor()
+        self.backgroundColor = UIColor.black()
     }
     
     public required init?(coder aDecoder: NSCoder)
@@ -73,7 +73,7 @@ public extension PreviewView
     {
         super.layoutSubviews()
         
-        self.previewLayer.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
+        self.previewLayer?.frame = CGRect(x: 0, y: 0, width: self.bounds.width, height: self.bounds.height)
     }
 }
 
@@ -81,7 +81,7 @@ private extension PreviewView
 {
     func prepare()
     {
-        self.previewLayer.videoGravity = self.videoGravity.layerVideoGravity
-        self.layer.addSublayer(self.previewLayer)
+        self.previewLayer?.videoGravity = self.videoGravity.layerVideoGravity
+        self.layer.addSublayer(self.previewLayer!)
     }
 }

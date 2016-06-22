@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Result<T, U: ErrorType>
+public enum Result<T, U: ErrorProtocol>
 {
     case success(T)
     case failure(U)
