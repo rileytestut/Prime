@@ -54,13 +54,13 @@ public class CameraController
             
             switch preferredCameraPosition
             {
-            case .front, .back: captureDevice = self.cameraDevice(position: preferredCameraPosition)
+            case .front, .back: captureDevice = self.cameraDevice(forPosition: preferredCameraPosition)
             case .unspecified: captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
             }
             
             if let captureDevice = captureDevice
             {
-                self.addCaptureDevice(captureDevice)
+                self.add(captureDevice)
             }
             
             self.captureSession.addOutput(self.stillImageOutput)
@@ -100,17 +100,17 @@ public extension CameraController
 /// Capture Media
 public extension CameraController
 {
-    func capturePhoto(_ completion: (Result<UIImage, NSError>) -> Void)
+    func capturePhoto(withCompletion completion: (Result<UIImage, NSError>) -> Void)
     {
-        self._capturePhoto(completion)
+        self._capturePhoto(withCompletion: completion)
     }
     
-    func capturePhoto<T: CapturedMediaProtocol>(_ completion: (Result<T, NSError>) -> Void)
+    func capturePhoto<T: CapturedMediaProtocol>(withCompletion completion: (Result<T, NSError>) -> Void)
     {
-        self._capturePhoto(completion)
+        self._capturePhoto(withCompletion: completion)
     }
     
-    private func _capturePhoto<T: CapturedMediaProtocol>(_ completion: (Result<T, NSError>) -> Void)
+    private func _capturePhoto<T: CapturedMediaProtocol>(withCompletion completion: (Result<T, NSError>) -> Void)
     {
         precondition(T.self == UIImage.self || T.self == Data.self || T.self == NSData.self || T.self == CMSampleBuffer.self, "Photo must be returned as UIImage, Data, NSData, or CMSampleBuffer")
         
@@ -146,7 +146,7 @@ public extension CameraController
 /// Camera Settings
 public extension CameraController
 {
-    func setCameraSettings(_ settings: CameraSettings) throws
+    func apply(_ settings: CameraSettings) throws
     {
         guard let currentCamera = self.currentCamera else { return }
         
@@ -184,12 +184,12 @@ public extension CameraController
 /// Capture Devices
 public extension CameraController
 {
-    func cameraDevice(position: AVCaptureDevicePosition) -> AVCaptureDevice?
+    func cameraDevice(forPosition position: AVCaptureDevicePosition) -> AVCaptureDevice?
     {
-        return self.captureDevice(AVMediaTypeVideo, position: position)
+        return self.captureDevice(withMediaType: AVMediaTypeVideo, position: position)
     }
     
-    private func captureDevice(_ mediaType: String, position: AVCaptureDevicePosition) -> AVCaptureDevice?
+    private func captureDevice(withMediaType mediaType: String, position: AVCaptureDevicePosition) -> AVCaptureDevice?
     {
         let devices = (AVCaptureDevice.devices(withMediaType: mediaType) as! [AVCaptureDevice]).filter({ $0.position == position })
         return devices.first
@@ -199,14 +199,14 @@ public extension CameraController
 /// Preview Views
 public extension CameraController
 {
-    func addPreviewView(_ previewView: PreviewView)
+    func add(_ previewView: PreviewView)
     {
         previewView.previewLayer?.session = self.captureSession
         
         self.previewViews.append(previewView)
     }
     
-    func removePreviewView(_ previewView: PreviewView)
+    func remove(_ previewView: PreviewView)
     {
         guard let index = self.previewViews.index(of: previewView) else { return }
         
@@ -218,7 +218,7 @@ public extension CameraController
 
 private extension CameraController
 {
-    func addCaptureDevice(_ captureDevice: AVCaptureDevice) -> Bool
+    func add(_ captureDevice: AVCaptureDevice) -> Bool
     {
         do
         {

@@ -32,7 +32,7 @@ extension ViewController
     {
         super.viewDidLoad()
         
-        self.cameraController.addPreviewView(self.previewView)
+        self.cameraController.add(self.previewView)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(ViewController.handleTapGesture(_:)))
         tapGestureRecognizer.numberOfTapsRequired = 1
@@ -76,7 +76,7 @@ private extension ViewController
         do
         {
             let settings = CameraSettings(focusMode: .autoFocus, exposureMode: .autoExpose, pointOfInterest: CGPoint(x: 0.5, y: 0.5))
-            try self.cameraController.setCameraSettings(settings)
+            try self.cameraController.apply(settings)
         }
         catch let error as NSError
         {
