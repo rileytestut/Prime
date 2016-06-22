@@ -201,7 +201,7 @@ public extension CameraController
 {
     func add(_ previewView: PreviewView)
     {
-        previewView.previewLayer?.session = self.captureSession
+        previewView.previewLayer.session = self.captureSession
         
         self.previewViews.append(previewView)
     }
@@ -210,7 +210,7 @@ public extension CameraController
     {
         guard let index = self.previewViews.index(of: previewView) else { return }
         
-        previewView.previewLayer?.session = nil
+        previewView.previewLayer.session = nil
         
         self.previewViews.remove(at: index)
     }
