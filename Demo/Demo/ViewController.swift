@@ -60,7 +60,7 @@ private extension ViewController
 {
     @objc func handleTapGesture(_ gestureRecognizer: UITapGestureRecognizer)
     {
-        self.cameraController.capturePhoto { (result) in
+        self.cameraController.capturePhoto { (result: UIImageResult) in
             switch result
             {
             case let .success(image): print("Captured image:", image)
